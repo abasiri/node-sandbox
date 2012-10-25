@@ -1,5 +1,5 @@
 var db = {}
-var jsmin = require('../lib/jsmin').jsmin;
+var jsmin = require('./jsmin').jsmin;
 var modules = require('./modules');
 var spawn = require('child_process').spawn
 
@@ -21,7 +21,6 @@ builder.prototype.compiler = function (code, name, root) {
   var self=this;
   function done (code) {
     self.require(code);
-    debugger
     try {    
       code = jsmin("",code,1);
     }catch(e){ console.log(code); }
@@ -73,7 +72,7 @@ builder.prototype.require = function (code) {
   var self = this;
   code.replace(/require\s*?\((.*?)\)/g, function (r, v) {
     try {
-      console.log("require: " + v);
+      //console.log("require: " + v);
       var name = v.replace(/\"(.*)\"|\'(.*)\'/, function (r) { return r.substring(1,r.length-1); });
       if(!self.need[name]) {
         self.need[name] = true;

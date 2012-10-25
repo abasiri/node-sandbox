@@ -3,7 +3,6 @@ function copy(from) {
   to.prototype=from;
   return new to;
 }
-
 exports.http = require('fs').readFileSync(__dirname + '/box/http.js', 'ascii');
 
 exports.net = function (context) {
@@ -29,6 +28,14 @@ exports.url = function (context) {
 exports.path = function (context) {
   return copy(require('path'));
 };
+
+exports.cheerio = function(context) {
+  return require('./node_modules/cheerio/index');
+}
+
+exports.request = function(context) {
+  return require('./node_modules/request/main');
+}
 
 exports.buffer = function (context) {
   return copy(require('buffer'));

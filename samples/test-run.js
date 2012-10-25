@@ -4,6 +4,9 @@ if(process.argv.length < 3  || typeof process.argv[2] == "undefined") {
 }
 
 
+console.log("Sandboxing...");
+console.log("=============");
+
 var sandbox = require('./..');
 var fs = require('fs');
 
