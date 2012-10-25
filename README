@@ -1,0 +1,4 @@
+To run a sample program do go into the samples folder and run:
+
+node test-run.js samplefile.js
+
