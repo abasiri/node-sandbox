@@ -1,10 +1,4 @@
-To run a sample program do go into the samples folder and run:
+use node-runner project instead.
 
-install the modules:
-
- npm install
-
-run:
-
- node test-run.js samplefile.js
-
+you can require using:
+    sandbox = require('node-sandbox');
