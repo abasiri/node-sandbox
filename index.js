@@ -1,5 +1,6 @@
 var Script = process.binding('evals').NodeScript;
 var modules = require('./modules');
+var assert = require('assert');
 
 var prefixBase = require('fs').readFileSync(__dirname + '/boxed.js', 'ascii');
 
@@ -66,28 +67,14 @@ function SandBox (code, config) {
   };
   try {
     Script.runInNewContext(prefixBase + "(function () { "+code._+" })();", this.context, "main");
+    self.config.set_result({ status: "success" });
   } catch(e) {
-    console.log(e);
-    self.error = true;
-    var print="Server error";
-    if(config.test) {
-      print=e;
-      if(typeof e != "string") {
-        print="<table border='0'>";
-        for(var a in e)
-          print += "<tr><td>"+a+"</td><td>"+JSON.stringify(e[a])+"</td></tr>";
-        print+="</table>";
-      }
+    if(e instanceof assert.AssertionError){
+      self.config.set_result({ status: "failure", exception: e});
+    } else {
+      self.config.set_result({ status: "exception", exception: e});
     }
-    (function (e) {
-      self.raw_server=function (req, res) {
-        res.writeHead(503, {"Content-Type":"text/html"});
-        res.end(e);
-      };
-    })(print);
-
-    //console.log(e);
-    //console.log(e.message || "")
+    self.error = true;
   }
 }
 
