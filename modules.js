@@ -25,6 +25,10 @@ exports.url = function (context) {
   return copy(require('url'));
 };
 
+exports.assert = function(context) {
+  return copy(require('assert'));
+}
+
 exports.path = function (context) {
   return copy(require('path'));
 };
