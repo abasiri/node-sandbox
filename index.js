@@ -69,7 +69,7 @@ function SandBox (code, config) {
     self.config.set_result({ status: "success" });
   } catch(e) {
     self.error = true;
-    throw(e);
+    self.config.check_errors(e);
   }
 }
 
@@ -94,3 +94,4 @@ exports.SandBox = SandBox;
 exports.build = function () {
   return require('./build').build.apply(this, arguments)
 };
+
