@@ -22,9 +22,11 @@ ___server(function (req, res) {
   var exit = __process_exit;
   var compile = __process_compile;
   var loop_check = __loop_check_;
-
   var modules = {};
-  global.require = function (name) {
+
+  // hide this from global.require exception messages by 
+  // having it in a separate method
+  var __require = function(name){
     if(modules[name]) return modules[name];
     var code = get_code(name);
     if(typeof code == "string") {
@@ -38,6 +40,11 @@ ___server(function (req, res) {
       return modules[name] = code;
     }
   };
+
+  global.require = function (name) {
+    return __require(name);
+  };
+
   global.Buffer = require('buffer').Buffer;
 })();
 

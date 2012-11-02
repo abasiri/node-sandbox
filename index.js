@@ -1,6 +1,5 @@
 var Script = process.binding('evals').NodeScript;
 var modules = require('./modules');
-var assert = require('assert');
 
 var prefixBase = require('fs').readFileSync(__dirname + '/boxed.js', 'ascii');
 
@@ -69,12 +68,8 @@ function SandBox (code, config) {
     Script.runInNewContext(prefixBase + "(function () { "+code._+" })();", this.context, "main");
     self.config.set_result({ status: "success" });
   } catch(e) {
-    if(e instanceof assert.AssertionError){
-      self.config.set_result({ status: "failure", exception: e});
-    } else {
-      self.config.set_result({ status: "exception", exception: e});
-    }
     self.error = true;
+    throw(e);
   }
 }
 
