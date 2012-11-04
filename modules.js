@@ -3,7 +3,6 @@ function copy(from) {
   to.prototype=from;
   return new to;
 }
-exports.http = require('fs').readFileSync(__dirname + '/box/http.js', 'ascii');
 
 exports.net = function (context) {
   throw "The Net module is not supported at this time";
@@ -25,21 +24,9 @@ exports.url = function (context) {
   return copy(require('url'));
 };
 
-exports.assert = function(context) {
-  return copy(require('assert'));
-}
-
 exports.path = function (context) {
   return copy(require('path'));
 };
-
-exports.cheerio = function(context) {
-  return require('./node_modules/cheerio/index');
-}
-
-exports.request = function(context) {
-  return require('./node_modules/request/main');
-}
 
 exports.buffer = function (context) {
   return copy(require('buffer'));
@@ -108,3 +95,4 @@ exports.fs = function (context, config) {
     readFile: noMod,
   };
 };
+

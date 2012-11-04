@@ -109,8 +109,14 @@ builder.prototype.searcher = function (name) {
   }
   // look in the modules.js to see if name is defined there
   else if(typeof modules[name] != "undefined") {}
-  else
-    this.code[name] = 'throw "Module '+name+' not found";';
+  else {
+    try {
+      // try to load the module un-sandboxed
+      this.code[name] = require(name)
+    } catch (e){
+      this.code[name] = 'throw "Module '+name+' not found";';
+    }
+  }
 };
 
 builder.prototype.count = function () {
